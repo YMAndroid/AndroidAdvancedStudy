@@ -1,0 +1,16 @@
+#Activity生命周期
+
+设备旋转时生命周期(当前有一个处于正在运行的Activity(onResume状态))：
+
+onPause  ->  onStop  ->  onDestroy  -> onCreate -> onStart -> onResume
+
+设备旋转会改变设备配置，当设备配置发生改变，Android就会销毁当前的Activity，然后在创建提个新的Activity
+
+应用处于不可见状态，系统会保存一个应用Activity的暂存状态，用于应用快速恢复。暂存activity会随着用户按了后退键，以及应用长时间处于后台状态，系统会将
+暂存activity记录清除。
+
+
+
+
+
+
