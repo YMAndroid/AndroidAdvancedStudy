@@ -10,6 +10,24 @@ onPause  ->  onStop  ->  onDestroy  -> onCreate -> onStart -> onResume
 暂存activity记录清除。
 
 
+#Android  SDK版本与兼容
+
+##Android编程与兼容性问题
+
+#UI fragment
+
+fragment是一种控制器对象，activity可以委派它完成一些任务。
+
+activity 托管 fragment两种方式：
+第一种： 在Activity布局中添加fragment ，比较简单，但灵活性较低，将fragment视图与activity视图绑定在一起，不能切换fragment
+第二种： 在Activity代码中添加fragment ，比较复杂，但是比较灵活，在运行时控制fragment
+
+
+
+
+
+
+
 
 
 
