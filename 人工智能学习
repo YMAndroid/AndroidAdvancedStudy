@@ -1,0 +1,533 @@
+1.安装 ubuntu16.04 
+自行安装
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2.安装ROS系统（机器人操作系统）
+参考网址： http://wiki.ros.org/cn/kinetic/Installation/Ubuntu （官网地址）
+ROS版本跟ubuntu16.04 版本需要对应，16.04对应的ROS版本是：Kinetic
+
+1)打开ubuntu的 软件和更新 -> 选择 ubuntu软件  -> 可从互联网下载 下的选择项全部勾选
+2)修改souces.list 文件
+$ sudo cp /etc/apt/sources.list /etc/apt/sources.list.backup     ####进行sources.list备份
+$ sudo gedit /etc/apt/sources.list
+
+#################################################################################################
+//将原souces.list内容删除，并添加以下内容到souces.list 中
+# 默认注释了源码镜像以提高 apt update 速度,如有需要可自行取消注释
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial-updates main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial-updates main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial-backports main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial-backports main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial-security main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial-security main restricted universe multiverse
+#############################################################################################################
+
+$ sudo apt-get update
+
+3)添加sources.list
+$ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list' 
+
+4)添加公钥
+$ sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 0xB01FA116
+
+5)安装
+$ sudo apt-get install ros-kinetic-desktop-full  ##桌面完整版
+
+6)初始化
+$ sudo rosdep init
+$ rosdep update
+报错： Error: cannot download default sources list from:
+ ........
+解决方法：
+$ sudo gedit /etc/hosts
+#在文件末尾添加
+151.101.84.133 raw.githubusercontent.com   # 保存退出
+
+7) 环境配置
+$ echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
+$ source ~/.bashrc
+
+8)构建工厂依赖
+$ sudo apt-get install python-rosinstall python-rosinstall-generator python-wstool build-essential
+
+9）测试
+$ roscore
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.安装Engin3
+参考博客： https://www.cnblogs.com/didada/p/12305066.html
+1)卸载原有Engin
+$ sudo updatedb 
+$ locate eigen3 
+$ sudo rm -rf /usr/include/eigen3 /usr/lib/cmake/eigen3 /usr/share/doc/libeigen3-dev /usr/share/pkgconfig/eigen3.pc /var/lib/dpkg/info/libeigen3-dev.list /var/lib/dpkg/info/libeigen3-dev.md5sums
+
+2) 下载3.3.4版本之后的Eigen
+下载地址：  https://gitlab.com/libeigen/eigen/-/archive/3.3.7/eigen-3.3.7.tar.gz
+
+3)安装依赖项
+$ sudo apt-get install libopenblas-dev
+$ sudo apt-get install --no-install-recommends libboost1.58-all-dev
+$ sudo apt-get install libx11-dev
+$ sudo apt-get install libgl1-mesa-dev
+$ sudo apt-get install libglu1-mesa-dev 
+$ sudo apt-get install freeglut3-dev
+$ sudo apt-get install doxygen
+$ sudo apt-get install cmake
+$ sudo wget https://nchc.dl.sourceforge.net/project/glew/glew/2.1.0/glew-2.1.0.tgz --no-check-certificate
+$ sudo tar -xzvf glew-2.1.0.tgz
+$ cd glew-2.1.0/
+$ sudo make 
+$ sudo make install
+$ sudo ldconfig -v
+
+4)安装Eigen
+$ sudo tar -xzvf eigen-3.3.7.tar.gz
+$ cd eigen-3.3.7   ### cd 进入解压的eigen目录
+$ mkdir build && cd build
+$ cmake ..
+$ make 
+$ sudo make install
+$ sudo ldconfig -v
+
+4)映射eigen3的路径  //安装路径为: /usr/include/eigen3
+$ sudo cp -r /usr/local/include/eigen3 /usr/include/eigen3 
+$ sudo ln -s /usr/include/eigen3/Eigen /usr/include/Eigen
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.安装Ceres(是Google库)
+
+1)添加源
+$ sudo gedit /etc/apt/sources.list
+把下面的源粘贴到source.list的最上方 
+deb http://cz.archive.ubuntu.com/ubuntu trusty main universe
+
+$ sudo apt-get update
+
+2)安装依赖库
+$ sudo apt-get install liblapack-dev libsuitesparse-dev libcxsparse3.1.2 libgflags-dev 
+$ sudo apt-get install libgoogle-glog-dev libgtest-dev
+
+3)下载Ceres库 
+$ git clone https://github.com/ceres-solver/ceres-solver    ### 下载比较慢   (不推荐)
+$ git clone https://gitee.com/mirrors/ceres-solver.git      ### 码云，下载快  (不推荐)
+上面两种下载方式，下载的均是最新Ceres代码，后面在编译Center-net会有问题。
+
+推荐手动下载，下载老版本 ceres-solver-1.14.0.tar.gz ，下载地址如下：
+http://distfiles.macports.org/ceres-solver/
+
+$ sudo tar -xzvf ceres-solver-1.14.0.tar.gz
+$ cd ceres-solver  ####选择你的Ceres的解压路径
+$ mkdir buikd && cd  build
+$ cmake ..
+$ make -j3
+$ sudo make install
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5.安装Nvidia显卡驱动(前提是你的电脑有NVIDIA显卡，我的电脑是Intel集成显卡 +  Nvidia独显)
+参考博客： https://zhuanlan.zhihu.com/p/40938035
+
+1)禁用nouveau
+$ ll /etc/modprobe.d/blacklist.conf
+$ sudo chmod 666 /etc/modprobe.d/blacklist.conf
+$ sudo gedit /etc/modprobe.d/blacklist.conf
+添加下面内容跟到blacklist.conf ：
+blacklist vga16fb
+blacklist nouveau
+blacklist rivafb
+blacklist rivatv
+blacklist nvidiafb
+
+$ sudo chmod 644 /etc/modprobe.d/blacklist.conf
+
+#更新内核
+$ sudo update-initramfs -u
+$ sudo apt-get install lib32ncurses5
+$ sudo apt-get install lib32z1
+$ reboot
+
+# 查看nouveau是否被屏蔽
+$ lsmod | grep nouveau
+##没有任何输出，即屏蔽成功
+
+# 查询合适版本驱动并安装
+$ sudo ubuntu-drivers devices
+
+###我的电脑驱动版本如下 nvidia-384,记住你的版本：
+driver   : nvidia-384 - distro non-free recommended
+
+### 添加源
+$ sudo add-apt-repository ppa:graphics-drivers/ppa  
+$ sudo apt-get update
+
+$ sudo service lightdm stop   ###关闭系统的ui界面，进入终端操作模式,然后按 Alt + F4(我的电脑,可能是F1 ~ F4 的任何一个) ，进入到终端操作，然后输入 ubuntu的用户名 、密码
+
+##安装
+$ sudo apt-get install nvidia-384
+$ sudo apt-get install mesa-common-dev
+$ sudo apt-get install freeglut3-dev
+$ sudo service lightdm start
+$ sudo moktuil --disable-validation
+$ sudo reboot
+
+我的电脑需要将seaure boot 设置为disable，才可以正常使用nvidia-smi 等指令
+
+####测试安装结果
+$ nvidia-smi
+
+######输出如下信息，安装成功：
+Thu May 14 16:02:43 2020       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 430.64       Driver Version: 430.64       CUDA Version: 10.1     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|===============================+======================+======================|
+|   0  GeForce GTX 105...  Off  | 00000000:01:00.0 Off |                  N/A |
+| N/A   46C    P3    N/A /  N/A |    152MiB /  4040MiB |      0%      Default |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                       GPU Memory |
+|  GPU       PID   Type   Process name                             Usage      |
+|=============================================================================|
+|    0      1078      G   /usr/lib/xorg/Xorg                           103MiB |
+|    0      1994      G   compiz                                        39MiB |
+|    0      2156      G   fcitx-qimpanel                                 7MiB |
++-----------------------------------------------------------------------------
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6. 安装CUDA
+当前安装为： cuda_9.0.176_384.81_linux.run
+
+1)下载 cuda_9.0.176_384.81_linux.run
+下载地址：https://dl.ypw.io/ubuntu-environment/
+
+2)安装
+$ sudo sh /home/user/cuda_9.0.176_384.81_linux.run 
+
+长按enter到100% ，下面是一些安装选项：
+ 1 Do you accept the previously read EULA?  
+ 2 accept/decline/quit: accept  
+ 3 Install NVIDIA Accelerated Graphics Driver for Linux-x86_64 384.81? 
+ 4 (y)es/(n)o/(q)uit: n  
+ 5 Install the CUDA 9.0 Toolkit?  
+ 6 (y)es/(n)o/(q)uit: y  
+ 7 Enter Toolkit Location  
+ 8 [ default is /usr/local/cuda-9.0 ]:  #直接回车，记住你的 cuda 安装路径 
+ 9 Do you want to install a symbolic link at /usr/local/cuda?  
+ 10 (y)es/(n)o/(q)uit: y  
+ 11 Install the CUDA 9.0 Samples?  
+ 12 (y)es/(n)o/(q)uit: y  
+ 13 Enter CUDA Samples Location  
+ 14 [ default is /home/pertor ]: 
+
+3)配置环境变量
+$ sudo gedit /etc/profile 
+打开文件后在文件末尾添加路径，也就是安装目录： 
+export PATH=/usr/local/cuda-9.0/bin:$PATH 
+export LD_LIBRARY_PATH=/usr/local/cuda-9.0/lib64$LD_LIBRARY_PATH 
+
+$ sudo reboot
+
+4)测试CUDA例子
+ $ cd /usr/local/cuda-9.0/samples/1_Utilities/deviceQuery   
+ $ sudo make 
+ $ ./deviceQuery   
+
+ 如果显示的是关于 GPU 的信息，则说明安装成功了。 
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+7.安装cudnn 配置
+
+1)下载cudnn ， 当前安装版本： cudnn-9.0-linux-x64-v7.6.1.34.tgz
+下载地址： https://dl.ypw.io/ubuntu-environment/
+
+2)安装
+$ tar -zxvf cudnn-9.0-linux-x64-v7.6.1.34.tgz  
+$ sudo cp cuda/include/cudnn.h /usr/local/cuda-9.0/include/ #注意 cuda 路径 
+$ sudo cp cuda/lib64/libcudnn* /usr/local/cuda-9.0/lib64/  
+$ sudo chmod a+r /usr/local/cuda-9.0/include/cudnn.h  
+$ sudo chmod a+r /usr/local/cuda-9.0/lib64/libcudnn* 
+$ nvcc --version   //查看 cuda 版本 
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+8.安装qt5 
+参考博客： https://blog.csdn.net/weixin_41995979/article/details/88182082
+当前安装版本 qt5.9.0
+1)下载qt5 ,下载地址： http://download.qt.io/archive/qt/
+qt-opensource-linux-x64-5.9.0.run
+
+2)安装
+$ chmod +x ~/qt-opensource-linux-x64-5.8.0.run
+$ ./qt-opensource-linux-x64-5.8.0.run
+
+安装过程tips:
+###我的安装路径为: /home/user/Qt5.9.0/
+###Qt组件等跟随默认配置
+
+3)设置修改快捷方式
+$ cd ~/.local/share/applications
+$ ls
+$ sudo vim DigiaQt-qtcreator-community.desktop
+
+####将Exec=/home/tloinny/Qt5.9.0/Tools/QtCreator/bin/qtcreator修改为  Exec=bash -i -c /home/tloinny/Qt5.9.0/Tools/QtCreator/bin/qtcreator
+
+4)安装ros_qtc_plugin 插件
+
+$ sudo add-apt-repository ppa:levi-armstrong/qt-libraries-xenial  
+$ sudo add-apt-repository ppa:levi-armstrong/ppa  
+$ sudo apt-get update && sudo apt-get install qt57creator-plugin-ros
+
+5)修改系统配置文件
+$ sudo gedit /usr/lib/x86_64-linux-gnu/qt-default/qtchooser/default.conf
+
+/usr/lib/x86_64-linux-gnu/qt4/bin
+/usr/lib/x86_64-linux-gnu
+将上面面内容修改为如下所示：
+/home/user/Qt5.9.0/5.9/gcc_64/bin
+/home/user/Qt5.9.0/5.9/gcc_64/lib
+
+完成
+
+6)测试使用qt-ros
+$ qtcreator-ros
+......................
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+10.安装vtk 
+参考博客： https://blog.csdn.net/GreenHandCGL/article/details/81585629
+vtk的版本需要跟qt对应，目前安装的vtk版本为7.1.1
+
+1)下载vtk   VTK-7.1.1.tar.gz 
+下载地址： https://vtk.org/download/   
+
+2)安装vtk
+$ tar -xzvf vtk-7.1.1.tar.gz  //解压
+$ cd vtk-7.1.1   //cd进解压好的文件目录中
+$ mkdir build && cd build
+$ cmake -DVTK_QT_VERSION:STRING=5 -DQT_QMAKE_EXECUTABLE:PATH=/home/ym/Qt5.9.0/5.9/gcc_64/bin/qmake -DVTK_Group_Qt:BOOL=ON -DCMAKE_PREFIX_PATH:PATH=/home/ym/Qt5.9.0/5.9/gcc_64/lib/cmake -DBUILD_SHARED_LIBS:BOOL=ON /home/ym/VTK-7.1.1
+$ make
+$ sudo make install
+
+3)qt配置QVTKWidget插件
+$ sudo cp /usr/local/plugins/designer/libQVTKWidgetPlugin.so  /home/用户名(自行修改)/Qt5.9.0/Tools/QtCreator/lib/Qt/plugins/designer/
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+11.安装pcl
+参考博客： https://blog.csdn.net/GreenHandCGL/article/details/81585629
+pcl安装版本： 1.8.1
+下载地址: 
+1)下载
+$ git clone https://github.com/PointCloudLibrary/pcl.git
+
+2)编译安装
+$ cd pcl-1.8.1 && mkdir build && cd build
+$ cmake -DCMAKE_BUILD_TYPE=Release ..
+$ make
+$ sudo make install
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+12.安装opencv
+参考博客： https://www.cnblogs.com/RichardYao/archive/2018/11/03/9900268.html  (亲测，可成功安装)
+当前安装版本： OpenCV – 2.3.0 
+
+1)下载
+下载路径： 
+https://opencv.org/releases/page/6/
+2)安装依赖包
+$ sudo apt-get install build-essential
+$ sudo apt-get install cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev
+$ sudo apt-get install python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev # 处理图像所需的包
+$ sudo apt-get install libavcodec-dev libavformat-dev libswscale-dev libv4l-dev liblapacke-dev
+$ sudo apt-get install libxvidcore-dev libx264-dev # 处理视频所需的包
+$ sudo apt-get install libatlas-base-dev gfortran # 优化opencv功能
+$ sudo apt-get install ffmpeg
+
+3)安装opencv
+$ cd opencv-3.2.0
+$ mkdir build
+$ cd build
+$ cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/usr/local -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib-3.2.0/modules/ ..
+$ make -j8 #如果线程足够多可以使用 make -j12
+$ sudo make install
+
+$ sudo ldconfig -v
+$ pkg-config --modversion opencv #确认OpenCV的版本，如果显示3.2.0说明安装完成
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+13.安装anaconda
+下载地址： 
+https://repo.anaconda.com/archive/
+1)下载 Anaconda3-5.2.0-Linux-x86_64.sh
+2) 安装
+$ sudo sh /home/user/Anaconda3-5.2.0-Linux-x86_64.sh 
+
+#安装过程中一些选项 
+[/home/user/anaconda3] >>> /usr/local/anaconda3 # 输入自定义目录 
+Do you wish the installer to prepend the Anaconda3 install location 
+to PATH in your /home/zlf/.bashrc ? [yes|no] 
+[no] >>> yes 
+Do you wish to proceed with the installation of Microsoft VSCode? [yes|n
+o] 
+>>> no 
+安装完成后 在命令行输入： 
+
+$ conda 
+
+出现一些 anaconda 的相关信息，则安装配置完成。若提示 “conda：comand 
+is not found”则需要配置环境变量 
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+14.配置 pytorch0.4.1 
+
+torch-0.4.1-cp36-cp36m-linux_x86_64.whl下载路径：http://download.pytorch.org/whl/cu90/torch-0.4.1-cp36-cp36m-linux_x86_64.whl 
+
+为 centernet 创建 python3.6 的虚拟环境，并为虚拟环境安装 pytorch 
+$ conda create --name CenterNet python=3.6  # Proceed ([y]/n)? y 
+$ source activate 
+$ conda activate CenterNet 
+$ pip install torch-0.4.1-cp36-cp36m-linux_x86_64.whl  #随附资料提供 
+$ pip install torchvision==0.1.6 
+$ conda install numpy # Proceed ([y]/n)? y 
+
+验证 torch 安装是否成功，打开 python 
+ >>>import torch 
+ >>>torch.cuda.is_available()
+
+如果不报错，且输出的是 True，说明成功安装。
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+15.编译Center-net
+将 CenterNet工程 拷贝到/home/user 目录下 
+
+$ cd  /home/user/CenterNet/src/lib/models/networks/DCNv2 
+$ ./make.sh
+
+如果出现: ImportError: torch.utils.ffi requires the cffi package，需要安装 cffi 包  
+$ pip install cffi   
+
+如果出现：致命错误：cuda.h：没有那个文件或目录，那么在 make.sh 的最
+前部添加 
+ export CUDA_PATH=/usr/local/cuda-9.0/ 
+ export CXXFLAGS="-std=c++11" 
+ export CFLAGS="-std=c99" 
+   
+ export PATH=/usr/local/cuda-9.0/bin${PATH:+:${PATH}} 
+ export CPATH=/usr/local/cuda-9.0/include${CPATH:+:${CPATH}} 
+ export LD_LIBRARY_PATH=/usr/local/cuda-9.0/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}} 
+
+其中 cuda 换成你自己的路径
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+16.编译VINS-Fusion
+
+在 Ubuntu 系统中建立一个工作空间，在终端中输入： 
+
+$ mkdir -p ~/catkin_ws/src 
+
+将 VINS-Fusion 放入 src 文件夹，在工作空间终端界面输入： 
+
+$ catkin_make 
+
+完成编译即可。 
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+16.系统运行说明
+
+1)数据集准备
+
+$ mkdir kitti_data
+
+将数据集包存放到该文件夹下，例如：
+kitti_2011_09_26_drive_0001_synced.bag 
+kitti_2011_09_26_drive_0011_synced.bag 
+kitti_2011_09_26_drive_0039_synced.bag
+
+2)运行说明
+
+终端１
+cd ~/Baolong/CenterNet_1/src/
+python server_queue.py    
+#服务器端: 接收客户端发来的图片，进行目标检测，把检测结果发送给客户端
+报错：ModuleNotFoundError: No module named 'cv2'
+解决办法：  pip install opencv-python
+
+
+终端２
+source ~/catkin_ws/devel/setup.bash
+roslaunch velody_fusion stereo_lidar_fusion_cn.launch  
+#其中client_ros :与目标检测部分进行socket通信
+#发布/centernet/bounding_boxes
+
+点击[data]按钮选择bag包
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+17.安装 kitti2bag 
+参考博客: https://blog.csdn.net/FSKEps/article/details/90345566
+	https://www.cnblogs.com/yibeimingyue/p/11685420.html
+1)安装kitti2bag
+$ sudo pip install kitti2bag
+
+（2）下载 kitti raw dataset 
+    官网： (http://www.cvlibs.net/datasets/kitti/raw_data.php)  
+    国内镜像： (http://www.functionweb.tk/?/kitti-raw/raw/kitti_raw/) 
+
+（3）转为 bag 格式 
+ 将下载好的序列和对应的传感器标定文件放在同一目录下，解压 
+ unzip 2011_09_28_drive_0021_sync.zip 
+ unzip 2011_09_28_calib.zip 
+ 转换成 bag 包 
+   kitti2bag -t 2011_09_28 -r 0021 raw_synced 
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+18.安装小觅摄像头SDK
+参考博客： https://mynt-eye-s-sdk.readthedocs.io/zh_CN/latest/src/sdk/install_ros_wrapper.html
+
+1)下载SDK
+$ sudo git clone https://github.com/slightech/MYNT-EYE-S-SDK.git
+
+2)编译
+$ cd <sdk>  # <sdk> 是指sdk路径
+$ make ros
+
+3)测试运行节点
+$ source wrappers/ros/devel/setup.bash
+$ roslaunch mynt_eye_ros_wrapper mynteye.launch  # 这个节点没有图像显示
+
+运行节点，同时打开 RViz 预览：
+
+$ source wrappers/ros/devel/setup.bash
+$ roslaunch mynt_eye_ros_wrapper display.launch
+
+测试服务
+运行节点，有提供获取设备信息服务，如下测试：
+
+$ source wrappers/ros/devel/setup.bash
+$ rosrun mynt_eye_ros_wrapper get_device_info.py
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
