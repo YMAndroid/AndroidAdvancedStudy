@@ -39,6 +39,30 @@ style 是XML资源文件
 1、父组件首先 获取子控件的layout_width 属性，根据该属性的设备的值，计算出剩余未分配空间；
 2、父组件在根据子组件设置的layout_weight 属性的值，给子空间分配剩余的未分配空间。
 
+# Activity 与 Activity之间数据回传
+通过Activity 的 startActivityForResult()方法 与  setResult() 方法， 通过ActivityManager 在父Activity 与 子Activity之间进行控制。
+
+# fragment 与 fragment 之间数据传递
+##数据传递
+1) 设置传递参数 setArguments()
+2) 获取传递参数 getArguments()
+
+
+##数据回传
+建立fragment 之间的关系
+1) 设置目标fragment setTargetFragment()
+2) 获取目标fragment getTargetFragment()
+3) 使用目标fragment 的 onActivityResult 方法
+4) FragmentManager 会调用 目标 fragment 的 onActivityResult() 
+
+
+
+
+
+ 
+
+
+
 
 
 
