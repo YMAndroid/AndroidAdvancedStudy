@@ -53,7 +53,15 @@ style 是XML资源文件
 1) 设置目标fragment setTargetFragment()
 2) 获取目标fragment getTargetFragment()
 3) 使用目标fragment 的 onActivityResult 方法
-4) FragmentManager 会调用 目标 fragment 的 onActivityResult() 
+4) FragmentManager 会调用 目标 fragment 的 onActivityResult()
+
+# 数据库操作
+1) 外键
+2) 索引
+3) ORM框架
+
+# 隐式Intent
+
 
 
 
