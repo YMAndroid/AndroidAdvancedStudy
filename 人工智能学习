@@ -484,9 +484,11 @@ kitti_2011_09_26_drive_0039_synced.bag
 cd ~/Baolong/CenterNet_1/src/
 python server_queue.py    
 #服务器端: 接收客户端发来的图片，进行目标检测，把检测结果发送给客户端
+
 报错：ModuleNotFoundError: No module named 'cv2'
 解决办法：  pip install opencv-python
-
+报错： ModuleNotFoundError: No module named 'simplejson
+解决办法：pip install simplejson
 
 终端２
 source ~/catkin_ws/devel/setup.bash
