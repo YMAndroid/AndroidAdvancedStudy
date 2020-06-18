@@ -67,6 +67,14 @@ style 是XML资源文件
 1) 主外部存储
 2) 其他介质外部存储
 
+# fragment 在旋转设备时保留，不跟随Activity的销毁而销毁
+
+1)已调用了fragment的 setRetainInstance(true) 方法;
+2)因设备配置改变(通常为设备旋转),托管activity正在被销毁。
+fragment只能短暂处于保留状态,即fragment脱离旧activity到重新附加给立即创建的新activity之间的一段时间
+
+
+
 
 
 
