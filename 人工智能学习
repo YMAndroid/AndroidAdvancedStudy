@@ -119,10 +119,10 @@ $ git clone https://gitee.com/mirrors/ceres-solver.git      ### 码云，下载�
 http://distfiles.macports.org/ceres-solver/
 
 $ sudo tar -xzvf ceres-solver-1.14.0.tar.gz
-$ cd ceres-solver  ####选择你的Ceres的解压路径
-$ mkdir buikd && cd  build
-$ cmake ..
-$ make -j3
+$ cd ceres-solver-1.14.0  ####选择你的Ceres的解压路径
+$ sudo mkdir build && cd  build
+$ sudo cmake ..
+$ sudo make -j3
 $ sudo make install
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
