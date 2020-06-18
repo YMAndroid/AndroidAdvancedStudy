@@ -357,7 +357,7 @@ $ unzip opencv-3.2.0.zip
 $ cd opencv-3.2.0
 $ mkdir build
 $ cd build
-$ cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/usr/local -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib-3.2.0/modules/ ..
+$ cmake -D CMAKE_BUILD_TYPE=Release -D CUDA_GENERATION=Kepler -D CMAKE_INSTALL_PREFIX=/usr/local -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib-3.2.0/modules/ ..
 ### 执行这一步的时候会下载： ippicv_linux_20151201.tgz 文件， 由于网络的原因，会下载失败，推荐手动下载，将下载的ippicv_linux_20151201.tgz 拷贝到
 ### ~/opencv-3.2.0/3rdparty/ippicv/downloads/linux-808b791a6eac9ed78d32a7666804320e/  该目录下
 
