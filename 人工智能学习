@@ -371,6 +371,18 @@ $ sudo make install
 $ sudo ldconfig -v
 $ pkg-config --modversion opencv #确认OpenCV的版本，如果显示3.2.0说明安装完成
 
+######待处理的错误：
+-- Looking for linux/videodev.h
+-- Looking for linux/videodev.h - not found
+-- Looking for linux/videodev2.h
+-- Looking for linux/videodev2.h - found
+-- Looking for sys/videoio.h
+-- Looking for sys/videoio.h - not found
+解决办法： (未验证)
+$ sudo apt-get install libv4l-dev
+$ cd /usr/include/linux
+$ sudo ln -s ../libv4l1-videodev.h videodev.h
+
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 13.安装anaconda
 下载地址： 
