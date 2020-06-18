@@ -87,8 +87,8 @@ $ sudo ldconfig -v
 $ sudo tar -xzvf eigen-3.3.7.tar.gz
 $ cd eigen-3.3.7   ### cd 进入解压的eigen目录
 $ sudo mkdir build && cd build
-$ cmake ..
-$ make 
+$ sudo cmake ..
+$ sudo make 
 $ sudo make install
 $ sudo ldconfig -v
 
