@@ -458,7 +458,13 @@ $ mkdir -p ~/catkin_ws/src
 
 $ catkin_make 
 
-完成编译即可。 
+完成编译即可。
+
+编译报错：
+/home/ym/catkin_ws/src/VINS-Fusion/cn_api/src/client_ros.cpp:20:23: fatal error: json/json.h: 没有那个文件或目录
+解决办法：
+$ sudo apt-get install libjsoncpp-dev
+$ sudo cp /usr/lib/x86_64-linux-gnu/libjsoncpp.a  /usr/local/lib/
 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 16.系统运行说明
