@@ -482,6 +482,8 @@ kitti_2011_09_26_drive_0039_synced.bag
 
 终端１
 cd ~/Baolong/CenterNet_1/src/
+source activate
+conda activate CenterNet
 python server_queue.py    
 #服务器端: 接收客户端发来的图片，进行目标检测，把检测结果发送给客户端
 
@@ -572,6 +574,23 @@ $ roslaunch mynt_eye_ros_wrapper display.launch
 
 $ source wrappers/ros/devel/setup.bash
 $ rosrun mynt_eye_ros_wrapper get_device_info.py
+
+##获取的数据如下：
+rosrun mynt_eye_ros_wrapper get_device_info.py 
+IMU_TYPE: 0000
+LENS_TYPE: 0000
+ISP_VERSION: 0
+AUXILIARY_CHIP_VERSION: 0.0
+SPEC_VERSION: 1.0
+HARDWARE_VERSION: 2.0
+DEVICE_NAME: MYNT-EYE-S1030
+NOMINAL_BASELINE: 0
+SERIAL_NUMBER: 02810D1300090807
+FIRMWARE_VERSION: 2.4
+
+
+
+
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
