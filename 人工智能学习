@@ -488,7 +488,18 @@ python server_queue.py
 报错：ModuleNotFoundError: No module named 'cv2'
 解决办法：  pip install opencv-python
 报错： ModuleNotFoundError: No module named 'simplejson
-解决办法：pip install simplejson
+解决办法：
+$ pip install simplejson
+$ pip install opencv-python
+报错：ModuleNotFoundError: No module named 'progress'
+解决办法：pip install --upgrade --force-reinstall progress
+报错：ModuleNotFoundError: No module named 'PIL'
+解决办法：pip install Pillow
+
+问题：Downloading: "http://dl.yf.io/dla/models/imagenet/dla34-ba72cf86.pth" to /home/ym/.torch/models/dla34-ba72cf86.pth 下载慢
+解决办法： 手动下载dla34-ba72cf86.pth，并放置在/home/ym/.torch/models/目录下
+下载地址：
+http://dl.yf.io/dla/models/imagenet/dla34-ba72cf86.pth
 
 终端２
 source ~/catkin_ws/devel/setup.bash
@@ -498,10 +509,25 @@ roslaunch velody_fusion stereo_lidar_fusion_cn.launch
 
 点击[data]按钮选择bag包
 
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+17. 使用pip报错报错： 
+raise ReadTimeoutError(self._pool, None, "Read timed out.")
+ReadTimeoutError: HTTPSConnectionPool(host='files.pythonhosted.org', port=443): Read timed out.
+
+解决修改方案：
+$ cd ~/
+$ mkdir .pip
+$ cd .pip/
+$ touch pip.conf
+$ vim pip.conf
+
+添加： 
+[global]
+index-url = https://pypi.tuna.tsinghua.edu.cn/simple
+
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-17.安装 kitti2bag 
+18.安装 kitti2bag 
 参考博客: https://blog.csdn.net/FSKEps/article/details/90345566
 	https://www.cnblogs.com/yibeimingyue/p/11685420.html
 1)安装kitti2bag
@@ -519,7 +545,7 @@ $ sudo pip install kitti2bag
    kitti2bag -t 2011_09_28 -r 0021 raw_synced 
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-18.安装小觅摄像头SDK
+19.安装小觅摄像头SDK
 参考博客： https://mynt-eye-s-sdk.readthedocs.io/zh_CN/latest/src/sdk/install_ros_wrapper.html
 
 1)下载SDK
