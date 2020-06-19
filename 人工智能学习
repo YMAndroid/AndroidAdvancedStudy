@@ -598,6 +598,15 @@ github地址： https://github.com/wszqkzqk/deepin-wine-ubuntu
 
 
 
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+安装谷歌浏览器
+参考博客： https://www.jianshu.com/p/e650899463bb
+$ cd /tmp
+$ wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+$ sudo dpkg -i google-chrome-stable_current_amd64.deb
+
+
+
 
 
 
