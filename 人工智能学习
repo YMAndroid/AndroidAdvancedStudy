@@ -495,6 +495,8 @@ $ pip install opencv-python
 解决办法：pip install --upgrade --force-reinstall progress
 报错：ModuleNotFoundError: No module named 'PIL'
 解决办法：pip install Pillow
+报错： ModuleNotFoundError: No module named 'matplotlib'
+解决办法： pip install matplotlib
 
 问题：Downloading: "http://dl.yf.io/dla/models/imagenet/dla34-ba72cf86.pth" to /home/ym/.torch/models/dla34-ba72cf86.pth 下载慢
 解决办法： 手动下载dla34-ba72cf86.pth，并放置在/home/ym/.torch/models/目录下
