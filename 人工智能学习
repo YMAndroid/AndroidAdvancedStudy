@@ -549,7 +549,8 @@ $ sudo pip install kitti2bag
 参考博客： https://mynt-eye-s-sdk.readthedocs.io/zh_CN/latest/src/sdk/install_ros_wrapper.html
 
 1)下载SDK
-$ sudo git clone https://github.com/slightech/MYNT-EYE-S-SDK.git
+$ sudo git clone https://github.com/slightech/MYNT-EYE-S-SDK.git  ## 下载较慢
+$ sudo git clone https://gitee.com/mynt/MYNT-EYE-S-SDK.git  ### 推荐使用
 
 2)编译
 $ cd <sdk>  # <sdk> 是指sdk路径
