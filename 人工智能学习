@@ -5,6 +5,7 @@
 参考网址： http://wiki.ros.org/cn/kinetic/Installation/Ubuntu （官网地址）
 ROS版本跟ubuntu16.04 版本需要对应，16.04对应的ROS版本是：Kinetic
 
+安裝步驟如下： 
 1)打开ubuntu的 软件和更新 -> 选择 ubuntu软件  -> 可从互联网下载 下的选择项全部勾选
 2)修改souces.list 文件
 $ sudo cp /etc/apt/sources.list /etc/apt/sources.list.backup     ####进行sources.list备份
@@ -588,6 +589,11 @@ NOMINAL_BASELINE: 0
 SERIAL_NUMBER: 02810D1300090807
 FIRMWARE_VERSION: 2.4
 
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+20.autoware安装记录
+
+参考博客：https://zhuanlan.zhihu.com/p/123347321
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ubuntu 下安装Wechat
