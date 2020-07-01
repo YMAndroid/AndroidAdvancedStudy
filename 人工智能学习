@@ -634,7 +634,41 @@ $ cd ~/kalibr_workspace
 $ catkin build -DCMAKE_BUILD_TYPE=Release -j4
 
 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+小觅运行VINS-Fusion
+参考博客： https://blog.csdn.net/CSDN_XCS/article/details/91039481
+前提是已经安装好了 小觅摄像头驱动， 以及载编译小觅的vins-fusion例程源码
+打开终端,执行以下指令：
+$ cd MYNT-EYE-S-SDK  ### SDK 所在的目录
+$ source wrappers/ros/devel/setup.bash
+$ roslaunch mynt_eye_ros_wrapper vins_fusion.launch 
 
+打开另外一个终端：
+$ cd ~/MYNT-EYE_ws
+$ source devel/setup.bash
+$ roslaunch vins mynteye-s-stereo-imu.launch 
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+小觅双目数据包制作
+采用rosbag recode 进行制作。
+参考官网wiki： 
+
+打开终端，执行以下指令：
+记录指令：
+$ rosbag record -o newbag /mynteye/left/image_raw /mynteye/right/image_raw /mynteye/left_rect/image_rect /mynteye/right_rect/image_rect
+###记录结果为： newbag_2020-06-30-16-12-26.bag 
+
+打开新的终端：
+$ cd MYNT-EYE-S-SDK/
+$ source ./wrappers/ros/devel/setup.bash
+$ roslaunch mynt_eye_ros_wrapper vins_fusion.launch
+
+打开新的终端：
+播放bag包指令：（需要确保小觅摄像头处于运行状态）
+$ rosbag play newbag_2020-06-30-16-12-26.bag
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 
