@@ -719,6 +719,22 @@ $ rosrun camera_calibration cameracalibrator.py --size 8x6 --square 0.028  image
 
 
 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+相机标定博客记录：
+https://blog.csdn.net/learning_tortosie/article/details/79901255
+https://zhuanlan.zhihu.com/p/115044775
+ROS单目标定相机wiki：
+http://wiki.ros.org/camera_calibration/Tutorials/MonocularCalibration
+
+ROS双目相机标定：
+http://wiki.ros.org/camera_calibration/Tutorials/StereoCalibration
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+autoware 
+运行参考博客：
+https://github.com/Autoware-AI/autoware.ai/wiki/ROSBAG-Demo
+
 
 
 
