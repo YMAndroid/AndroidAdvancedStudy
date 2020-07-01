@@ -669,11 +669,53 @@ $ roslaunch mynt_eye_ros_wrapper vins_fusion.launch
 $ rosbag play newbag_2020-06-30-16-12-26.bag
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ubuntu16.04 ros标定相机
+参考博客： https://blog.csdn.net/qq_36804363/article/details/89269776
+官网博客： http://wiki.ros.org/camera_calibration
 
+第一步执行如下指令，前提是已经安装好ros了：
+$ rosdep install camera_calibration
 
+第二步： 安装驱动
+$ mkdir catkin_test
+$ cd  catkin_test
+$ mkdir src 
+$ cd src
+$ git clone https://github.com/bosch-ros-pkg/usb_cam.git
+$ cd ..
+$ catkin_make 
 
+第三步： 开始标定测试
+$ roslaunch usb_cam usb_cam-test.launch
 
+开启一个新的终端：
+$ rostopic list
 
+查看发布的话题：
+/image_view/output
+/image_view/parameter_descriptions
+/image_view/parameter_updates
+/rosout
+/rosout_agg
+/usb_cam/camera_info
+/usb_cam/image_raw
+/usb_cam/image_raw/compressed
+/usb_cam/image_raw/compressed/parameter_descriptions
+/usb_cam/image_raw/compressed/parameter_updates
+/usb_cam/image_raw/compressedDepth
+/usb_cam/image_raw/compressedDepth/parameter_descriptions
+/usb_cam/image_raw/compressedDepth/parameter_updates
+/usb_cam/image_raw/theora
+/usb_cam/image_raw/theora/parameter_descriptions
+/usb_cam/image_raw/theora/parameter_updates
+
+终端输入标定指令：
+$ rosrun camera_calibration cameracalibrator.py --size 8x6 --square 0.028  image:=/usb_cam/image_raw camera:=/usb_cam
+
+备注：--size 8x6   代表的棋盘格 横向与纵向 黑白棋盘格的交点数；  --square 0.028 代表棋盘格上每个黑色方块的边长
+
+第四步：开始采集图像
+参照博客进行采集。  https://blog.csdn.net/qq_36804363/article/details/89269776
 
 
 
