@@ -717,8 +717,6 @@ $ rosrun camera_calibration cameracalibrator.py --size 8x6 --square 0.028  image
 第四步：开始采集图像
 参照博客进行采集。  https://blog.csdn.net/qq_36804363/article/details/89269776
 
-
-
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 相机标定博客记录：
 https://blog.csdn.net/learning_tortosie/article/details/79901255
@@ -741,6 +739,50 @@ https://zhuanlan.zhihu.com/p/147051259
 
 https://zhuanlan.zhihu.com/p/115044775
 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ros-navigation 导航包安装
+参考博客：
+https://www.cnblogs.com/hiram-zhang/p/10416081.html
+
+ros-cartographer 建图安装 
+参考博客：
+https://blog.csdn.net/qq_26482237/article/details/92676267
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+autolabor 小车
+驱动安装参考博客：
+http://www.autolabor.cn/usedoc/ap1/getStart
+
+驱动下载：
+http://www.autolabor.cn/download
+
+Autolabor Pro1 ROS驱动包
+Autolabor ROS键盘控制包
+
+
+目前基于ros的驱动已经安装好了， 在 /home/ym/catkin_ws_autolabor 目录下。
+
+1、小车跟笔记本链接，打开电源开关，将开关切换到上位机模式
+终端输入：
+$ cd  catkin_ws_autolabor
+$ ll /dev/ttyUSB0
+$ chmod 777 /dev/ttyUSB0
+控制机器人运动
+$ cd  src/autolabor_keyboard_control/script
+$ ./add_keyboard_udev
+
+$ cd  autolabor_pro1_driver
+$ cd  launch 
+$ roslaunch keyboard_move.launch
+
+就可以运行了
+键盘操作： 1：增加线速度 2：减小线速度   3：增加角速度  4：减少角速度
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 
