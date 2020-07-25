@@ -612,8 +612,8 @@ $ wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 $ sudo dpkg -i google-chrome-stable_current_amd64.deb
 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-安装小觅标定工具 （通过源码编译安装，前提是已经安装了ROS）
-kalibr
+Kalibr标定工具安装（通过源码编译安装，前提是已经安装了ROS）
+
 第一步：安装依赖项
 $ sudo apt-get install python-setuptools
 $ sudo apt-get install python-setuptools python-rosinstall ipython libeigen3-dev libboost-all-dev doxygen
@@ -633,6 +633,57 @@ $ git clone https://github.com/ethz-asl/Kalibr.git
 $ cd ~/kalibr_workspace
 $ catkin build -DCMAKE_BUILD_TYPE=Release -j4
 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+imu_utils 工具 标定 IMU   
+前提是安装了ceres
+参考博客：https://blog.csdn.net/fang794735225/article/details/92804030
+
+1)安装依赖项：
+$ sudo apt-get install libdw-dev
+
+2)下载imu_utils和code_utils
+下载地址：
+imu_utils下载地址为：https://github.com/gaowenliang/imu_utils
+code_utils下载地址为： https://github.com/gaowenliang/code_utils
+
+3) 编译
+先编译code_utils，在编译imu_utils, imu_utils依赖 code_utils
+  编译imu_utils:
+  $ mkdir -p catkin_ws/src
+  拷贝下载的code_utils代码到catkin_ws/src/ 目录下
+  $ cd ~/catkin_ws
+  $ catkin_make
+  
+  报错：code_utils-master/src/sumpixel_test.cpp:2:24: fatal error: backward.hpp:No such file or directory
+  解决办法： code_utils下面找到sumpixel_test.cpp，修改#include "backward.hpp"为 #include “code_utils/backward.hpp”，再编译
+  
+  编译code_utils:
+  将imu_utils 拷贝到catkin_ws/src
+  $ cd ~/catkin_ws
+  $ catkin_make
+4) 录制imu.bag (录制两个小时)
+  $ cd MYNT-EYE-D-SDK
+  $ source wrappers/ros/devel/setup.bash
+  $ roslaunch mynteye_wrapper_d display.launch
+  $ rosbag record /mynteye/imu/data_raw -O imu.bag
+
+5) 标定IMU
+  $ rosbag play -r 200　imu_utils/imu.bag (这里要写你录制的包的路径)
+  $ cd imu_ws
+  $ source ./devel/setup.bash
+  $ roslaunch imu_utils mynt_imu.launch 
+  
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Kalibr标定工具 对 小觅双目相机标定
+参考博客：
+https://blog.csdn.net/weixin_41586393/article/details/99306237
+
+
+kalibr_calibrate_cameras 
+--bag /home/ym/mynete_clib.bag 
+--toptic /mynteye/imu/data_raw /mynteye/left/image_raw /mynteye/right/image_raw 
+--models pinhole-radtan  pinhole-radtan 
+--target /home/ym/april_8*6_A4.yaml
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 小觅运行VINS-Fusion
@@ -778,7 +829,26 @@ $ roslaunch keyboard_move.launch
 键盘操作： 1：增加线速度 2：减小线速度   3：增加角速度  4：减少角速度
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+ubuntu 16.04 安装/卸载/删除python-igraph方法
+参考博客：https://segmentfault.com/a/1190000011731161
 
+安装：
+$ sudo apt-get install python-igraph
+
+卸载：
+$ sudo apt-get remove python-igraph
+
+或者下面的指令删除python-igraph包以及其依赖项
+$ sudo apt-get --auto-remove python-igraph
+=================================================================================
+Ubuntu 16.04系统在 执行  sudo apt-get update 出现
+E: 无法下载 http://ppa.launchpad.net/fcitx-team/nightly/ubuntu/dists/xenial/main/binary-amd64/Packages 404 Not Found
+解决办法：
+$ cd ~/etc/apt/sources.list.d
+$ ls
+//删除报错的源
+$ mv fcitx-team-ubuntu-nightly-xenial.list fcitx-team-ubuntu-nightly-xenial.list.bak
+===================================================================================
 
 
 
