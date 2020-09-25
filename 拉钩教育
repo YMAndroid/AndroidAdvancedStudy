@@ -14,3 +14,195 @@
 
 ## 常见问题剖析
 
+字节码层面
+Java中String字符串的长度限制？
+.class 文件 --字节码类文件(.class文件)
+有了字节码，通过虚拟机，可以运行在任何平台上
+有了字节码，解除了Java虚拟机和Java语言之间的耦合。
+
+Java虚拟机可以支持很多种其它语言。
+虚拟机 JVM 只关注字节码文件，不关注具体是由哪种语言编译而成。
+
+Class 文件包含内容： 无符号数和表
+无符号数：
+   数据类型：u1、u2、u4、u8 分别代表 1个字节、2个字节、4个字节、8个字节
+表：
+   由多个无符号数或者其它表作为数据项构成的复合数据类型。class文件中所有表都是”_info”结尾。
+
+04讲 编译插桩操纵字节码，完成不可能完成的任务
+
+编译插桩
+Aspect-Oriented Programming 框架(AOP)
+   ----面向切面编程
+
+实现编译插桩的两种方式：
+AspectJ
+
+ASM
+编写asm代码，比如idea插件bytecode outline  ---> Android Studio插件
+
+
+字节码文件
+Gradle 编译项目中的.java文件
+Transform 
+Gradle Plugin 
+----遍历目标.class文件
+ASM动态注入插入的字节码
+
+第三方 Gradle插件， hiBeaver
+
+第一步： 自定义Gradle插件
+第二步：自定义Transform 
+
+inputs :
+传过来的输入流，一种是 jar包，一种是directory (目录格式)
+
+outputProvider :
+获取到输出目录，最后将修改的文件复制到输出目录。
+
+第四讲  
+
+Android APK打包编译过程
+自定义Gradle插件
+Transform API使用
+ASM的使用
+
+第五讲
+深入理解ClassLoader加载机制
+
+.class 文件加载器
+
+Java中的类何时被加载器加载
+
+1.	调用类构造器
+2.	调用类中的静态变量或者静态方法
+
+CLASSPATH :
+.;%JAVA_HOME%\lib;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\tools.jar;%CATALINA_HOME%\lib\servlet-api.jar
+
+AppClassLoader 面向用户的类加载器
+
+双亲委派模式
+当类加载器收到加载类或资源请求时，通常都是先委托给父类加载器加载，也就是说，只有当父类加载器找不到指定的类或资源时，自身才会执行实际的类加载过程。
+
+Class 对象在执行引擎中的初始化过程
+
+Class 加载到内存中的步骤：
+
+装载   ------>       链接         ------>     初始化
+             验证、准备、解析
+
+装载：指Java虚拟机查找.class 文件并生成字节流，然后根据字节流创建java.lang.Class对象的过程。
+
+装载
+  ---隐性装载
+  ---显性装载
+
+链接
+  ---验证
+     
+  ---准备
+     为类中的静态变量分配内存
+  ---解析
+     将符号引用解析成直接引用(方法真正的内存地址)
+	 
+初始化
+  ---执行类构造器方法的过程，初始化类变量
+  
+对象初始化过程：
+  ---静态变量/静态代码块  -> 普通代码块 -> 构造函数
+ 
+ 
+Java内存模型与线程
+
+缓存一致性
+
+指令重排
+
+处理器对输入的字节码指令进行重排序处理
+
+Java内存模型 --- 虚拟机规范
+目的：解决CPU多级缓存、CPU优化、指令重排导致的内存访问问题。确保Java程序在
+各种平台下对内存的访问效果一致。
+
+JMM - 内存模型：
+符合happens-before 先行发生规则的：
+
+程序次序规则
+
+锁定规则
+Lock   unlock
+
+变量原则
+Volatitle  保证线程可见性
+
+线程启动规则
+
+线程中断规则
+
+线程终结规则
+
+
+Synchronized 
+---修饰实例方法；
+---修饰静态类方法；
+---修饰代码块；
+
+ReentrantLock 基本使用
+加锁 跟 解锁操作均需要手动操作。
+
+公平锁实现
+
+Java线程优化 偏向锁，轻量级锁、重量级锁
+
+
+
+Synchronized 实现原理
+
+深入理解AQS 和 CAS 原理
+
+Abstract Queued Synchronizer  
+一般翻译为同步器，实现多线程同步功能的框架。
+
+ReentrantLock  和 AQS 关系
+
+模板模式
+Node双端队列节点
+先进先出双端队列
+
+线程池出现，解决了两个问题：
+
+1、执行大量异步任务时，线程池可以提供良好的性能。
+2、线程池提供一种资源限制和管理手段，可以限制线程个数，动态新增线程等。
+
+第十三讲 Android是如何通过Activity进行交互的
+
+
+第十四讲 彻底掌握Android touch 事件分发时序
+
+
+
+
+
+
+第十五讲 Android自定义View
+两种方式：
+1、继承系统提供的成熟控件 ( 比如: LinearLayout、RelativeLayout、ImageView)
+2、继承自系统View或者ViewGroup，并且自绘显示内容
+
+
+继承现有控件
+
+自定义属性
+
+RecyclerView 替代 Listview
+
+
+
+
+
+
+
+
+
+
